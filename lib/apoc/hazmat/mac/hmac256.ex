@@ -39,11 +39,11 @@ defmodule Apoc.Hazmat.MAC.HMAC256 do
 
   def sign(message, key, _opts) when is_valid_key(key) do
     tag = :crypto.mac(:hmac, :sha256, key, message)
-      # if function_exported?(:crypto, :mac, 4) do
-      #   :crypto.mac(:hmac, :sha256, key, message)
-      # else
-      #   :crypto.hmac(:sha256, key, message)
-      # end
+      if function_exported?(:crypto, :mac, 4) do
+        :crypto.mac(:hmac, :sha256, key, message)
+      else
+        :crypto.hmac(:sha256, key, message)
+      end
 
     {:ok, tag}
   end
